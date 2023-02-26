@@ -5,7 +5,7 @@ import { TbFileInvoice } from 'react-icons/tb'
 import { AiOutlineUserAdd } from 'react-icons/ai'
 import { BsArchive } from 'react-icons/bs'
 
-const Sidebar = ({ setInv, handleRefreshClick, setClient, setSearchinv, setExpenses, setPersonalExpenses, setBusinessExpenses, setTotalinv, setTotalPersonalExpenses, setTotalBusinessExpenses }) => {
+const Sidebar = ({ setInv, setSales,  setExpenses, setPersonalExpenses, setBusinessExpenses, setTotalinv, setTotalPersonalExpenses, setTotalBusinessExpenses }) => {
   return (
     <Flex
       flexDir='column'
@@ -14,7 +14,7 @@ const Sidebar = ({ setInv, handleRefreshClick, setClient, setSearchinv, setExpen
       mt='5px'
     >
       <Button
-        onClick={() => setClient(false) & setInv(false) & setSearchinv(false) & setExpenses(false) & setPersonalExpenses(false) & setBusinessExpenses(false) & setTotalinv(false) & setTotalPersonalExpenses(false) & setTotalBusinessExpenses(false)}
+        onClick={() => setSales(false) & setInv(false)  & setExpenses(false) & setPersonalExpenses(false) & setBusinessExpenses(false) & setTotalinv(false) & setTotalPersonalExpenses(false) & setTotalBusinessExpenses(false)}
         mt='10px'
         leftIcon={<AiOutlineHome color='#0066ff' size='25px' />}
         color='#0066ff'
@@ -29,7 +29,7 @@ const Sidebar = ({ setInv, handleRefreshClick, setClient, setSearchinv, setExpen
       </Button>
 
       <Button 
-      onClick={() => setInv(true) & setClient(false) & setExpenses(false) & setPersonalExpenses(false) & setBusinessExpenses(false) & setTotalinv(false) & setTotalPersonalExpenses(false) & setTotalBusinessExpenses(false)} 
+      onClick={() => setInv(false) & setSales(false) & setExpenses(false) & setPersonalExpenses(false) & setBusinessExpenses(false) & setTotalinv(true) & setTotalPersonalExpenses(false) & setTotalBusinessExpenses(false)} 
       mt='10px' 
       variant='ghost' 
       leftIcon={<TbFileInvoice color='#0066ff' size='25px' />} 
@@ -40,11 +40,11 @@ const Sidebar = ({ setInv, handleRefreshClick, setClient, setSearchinv, setExpen
       fontWeight='normal' 
       transitionDuration='.4s' 
       _hover={{ transform: 'translateX(8px)', transitionDuration: '.4s', bg: '#e5efff' }}>
-        Invoices
+        Products
       </Button>
 
       <Button 
-      onClick={() => setClient(true) & setInv(false) & setSearchinv(false) & setExpenses(false) & setPersonalExpenses(false) & setBusinessExpenses(false) & setTotalinv(false) & setTotalPersonalExpenses(false) & setTotalBusinessExpenses(false)} 
+      onClick={() => setSales(true) & setInv(false) & setExpenses(false) & setPersonalExpenses(false) & setBusinessExpenses(false) & setTotalinv(false) & setTotalPersonalExpenses(false) & setTotalBusinessExpenses(false)} 
       mt='10px' 
       variant='ghost' 
       leftIcon={<AiOutlineUserAdd color='#0066ff' size='25px' />} 
@@ -55,11 +55,11 @@ const Sidebar = ({ setInv, handleRefreshClick, setClient, setSearchinv, setExpen
       fontWeight='normal' 
       transitionDuration='.4s' 
       _hover={{ transform: 'translateX(8px)', transitionDuration: '.4s', bg: '#e5efff' }}>
-        Clients
+        Sales
       </Button>
 
       <Button 
-      onClick={() => setExpenses(true) & setClient(false) & setInv(false) & setSearchinv(false) & setPersonalExpenses(false) & setBusinessExpenses(false) & setTotalinv(false) & setTotalPersonalExpenses(false) & setTotalBusinessExpenses(false)} 
+      onClick={() => setExpenses(true) & setSales(false) & setInv(false) & setPersonalExpenses(false) & setBusinessExpenses(false) & setTotalinv(false) & setTotalPersonalExpenses(false) & setTotalBusinessExpenses(false)} 
       variant='ghost' 
       leftIcon={<BsArchive color='#0066ff' size='25px' />} 
       color='#0066ff' 

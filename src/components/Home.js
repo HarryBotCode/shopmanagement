@@ -1,10 +1,9 @@
 import { Grid, GridItem } from '@chakra-ui/react'
-import { React, useState } from 'react'
-import Client from './Client'
+import { React, useState, useEffect } from 'react'
+import Sales from './Sales'
 import Dashboard from './Dashboard'
 import Header from './Header'
 import Invoices from './Invoices'
-import SearchInvoice from './SearchInvoice'
 import Sidebar from './Sidebar'
 import Expenses from './Expenses'
 import PersonalExpense from './PersonalExpense'
@@ -16,18 +15,20 @@ import TotalBusinessExpense from './TotalBusinessExpense'
 const Home = () => {
 
   const [inv, setInv] = useState(false);
-  const [searchinv, setSearchinv] = useState(false);
-  const [client, setClient] = useState(false);
+  const [sales, setSales] = useState(false);
   const [expenses, setExpenses] = useState(false);
   const [personalExpenses, setPersonalExpenses] = useState(false);
   const [businessExpenses, setBusinessExpenses] = useState(false);
   const [totalinv, setTotalinv] = useState(false);
   const [totalPersonalExpenses, setTotalPersonalExpenses] = useState(false);
   const [totalBusinessExpenses, setTotalBusinessExpenses] = useState(false);
+  
 
   const handleRefreshClick = () => {
     window.location.reload();
   };
+
+ 
 
   return (
     <>
@@ -42,14 +43,15 @@ const Home = () => {
         color='blackAlpha.700'
         fontWeight='bold'
       >
+        
         <GridItem pl='2' area={'header'}>
           < Header />
         </GridItem>
         <GridItem pl='2' area={'nav'}>
           <Sidebar setInv={setInv}
-            setSearchinv={setSearchinv}
+            
             handleRefreshClick={handleRefreshClick}
-            setClient={setClient}
+            setSales={setSales}
             setExpenses={setExpenses}
             setPersonalExpenses={setPersonalExpenses}
             setBusinessExpenses={setBusinessExpenses}
@@ -60,72 +62,80 @@ const Home = () => {
         </GridItem>
         <GridItem pl='2' bg='#fafafa' area={'main'}>
 
-          {!inv && !searchinv && !client && !expenses && !personalExpenses && !businessExpenses && !totalinv && !totalPersonalExpenses && !totalBusinessExpenses && (
+          {!inv && !sales && !expenses && !personalExpenses && !businessExpenses && !totalinv && !totalPersonalExpenses && !totalBusinessExpenses && (
             <Dashboard 
             setTotalinv={setTotalinv}
             setTotalPersonalExpenses={setTotalPersonalExpenses}
             setTotalBusinessExpenses={setTotalBusinessExpenses}
+            setSales={setSales}
             />
           )}
 
           {inv && (
 
 
-            <SearchInvoice
-              setSearchinv={setSearchinv}
-              setInv={setInv} />
-          )}
-
-          {searchinv && !inv && (
-
             <Invoices
-              setSearchinv={setSearchinv}
-              setInv={setInv} />
+            setTotalinv={setTotalinv}
+              setInv={setInv} 
+              
+              />
           )}
 
-          {client && (
-            <Client />
+          {/* {totalinv && !inv && (
+
+            <TotalInvoices
+              setTotalinv={setTotalinv}
+              setInv={setInv}
+              
+               />
+          )} */}
+
+          {sales && (
+            <Sales />
           )}
 
           {expenses && (
             <Expenses
               setPersonalExpenses={setPersonalExpenses}
               setExpenses={setExpenses}
-              setClient={setClient}
+              setSales={setSales}
               setBusinessExpenses={setBusinessExpenses}
             />
           )}
 
-          {personalExpenses && !expenses && (
+          {personalExpenses && !expenses &&  !businessExpenses && (
             <PersonalExpense
               setInv={setInv}
-              setSearchinv={setSearchinv}
               setPersonalExpenses={setPersonalExpenses}
               setExpenses={setExpenses}
-              setClient={setClient} />
+              setSales={setSales} 
+              setBusinessExpenses={setBusinessExpenses}
+              setTotalinv={setTotalinv}
+              setTotalPersonalExpenses={setTotalPersonalExpenses}/>
           )}
 
-          {businessExpenses && !expenses && (
+          {businessExpenses && !expenses && !personalExpenses &&(
             <BusinessExpense
               setBusinessExpenses={setBusinessExpenses}
               setInv={setInv}
-              setSearchinv={setSearchinv}
               setPersonalExpenses={setPersonalExpenses}
               setExpenses={setExpenses}
-              setClient={setClient}
+              setSales={setSales}
+              setTotalinv={setTotalinv}
+              setTotalBusinessExpenses={setTotalBusinessExpenses}
             />
           )}
 
-          {totalinv && !inv && !searchinv && (
+          {totalinv && !inv && (
             <TotalInvoices 
-            setSearchinv={setSearchinv}
             setInv={setInv}
+            setTotalinv={setTotalinv}
             />
           )}
          
           {totalPersonalExpenses && !personalExpenses && (
             <TotalPersonalExpense
-            
+            setBusinessExpenses={setBusinessExpenses}
             setPersonalExpenses={setPersonalExpenses}
             setExpenses={setExpenses}
             />
@@ -133,7 +143,7 @@ const Home = () => {
           
            {totalBusinessExpenses && !businessExpenses && (
             <TotalBusinessExpense
-            
+            setPersonalExpenses={setPersonalExpenses}
             setBusinessExpenses={setBusinessExpenses}
             setExpenses={setExpenses}
             />
@@ -141,9 +151,9 @@ const Home = () => {
 
 
         </GridItem>
-        <GridItem pl='2' bg='blue.300' area={'footer'}>
+        {/* <GridItem pl='2' bg='blue.300' area={'footer'}>
           Footer
-        </GridItem>
+        </GridItem> */}
       </Grid>
     </>
   )

@@ -84,7 +84,7 @@ const Register = () => {
 
           
            <Button type='submit'  mt='20px' w='100%' bg='white' color='#2148c0' _hover={{bg:'#2f1893', color:'white'}}>Register </Button>
-           <Text mt='20px' color='white' _hover={{color:'#2f1893'}}><Link to="/"  >Already have an account? Click here</Link></Text>
+           <Text mt='20px' color='white' _hover={{color:'#2f1893'}}><Link to="/"  >Already have an account? Sign in</Link></Text>
            </form>
        </Flex>
    

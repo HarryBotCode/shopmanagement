@@ -1,7 +1,7 @@
 import { Flex, Heading } from '@chakra-ui/react'
 import React from 'react'
 
-const Client = () => {
+const Sales = () => {
   return (
     <Flex
     bg='#fafafa'
@@ -9,10 +9,10 @@ const Client = () => {
     p='6'
     justifyContent='flex-start'>
         
-        <Heading as='h3' size='lg'>Clients</Heading>
+        <Heading as='h3' size='lg'>Sales</Heading>
         
     </Flex>
   )
 }
 
-export default Client
+export default Sales

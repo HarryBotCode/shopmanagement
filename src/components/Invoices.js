@@ -1,5 +1,5 @@
 import { Button, Flex, Heading, HStack, IconButton, Input, Text } from '@chakra-ui/react'
-import React from 'react'
+import {React, useState} from 'react'
 import {IoMdArrowRoundBack} from 'react-icons/io'
 import {AiFillEye} from 'react-icons/ai'
 import {IoSettingsSharp} from 'react-icons/io5'
@@ -8,30 +8,122 @@ import {FiDownload} from 'react-icons/fi'
 import {AiOutlineCheck} from 'react-icons/ai'
 import {FcPaid} from 'react-icons/fc'
 import {MdPaid} from 'react-icons/md'
+import {useNavigate} from 'react-router-dom'
 
-const Invoices = ({setSearchinv, setInv}) => {
+
+const Invoices = ({setTotalinv, setInv}) => {
+
+    const [name, setName] = useState("");
+    const [address, setAddress] = useState("");
+    const [mobile, setMobile] = useState("");
+    const [email, setEmail] = useState("");
+    const [productName, setProductName] = useState("");
+    const [productPrice, setProductPrice] = useState("");
+    const [productQuantity, setProductQuantity] = useState("");
+    const [car, setCar] = useState("");
+    
+    
+    const handleInvoice = async (e) => {
+       
+        e.preventDefault();
+
+      const req = await fetch ("http://localhost:1337/api/invoice", {
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: await JSON.stringify ({
+                name,
+                address,
+                mobile, 
+                email,
+                productName,
+                productQuantity,
+                productPrice,
+                car,
+            })
+        })
+        }
+
+        
+
   return (
     <>
     <Flex
     flexDir='column'
     bg='#fafafa'
     p='5'>
-        <Heading as='h3' size='lg'> New Invoice</Heading>
+        <Heading as='h3' size='lg'> New Product</Heading>
     
     <Flex flexDir='row' alignItems='center' rounded='md' bg='white' p='6' justifyContent='space-between' mt='20px'>
-        <IconButton onClick={() => setSearchinv(false) & setInv(true)} icon={<IoMdArrowRoundBack color='#0066ff' size='25px' />} ></IconButton>
+        <IconButton onClick={() => setTotalinv(true) & setInv(false)} icon={<IoMdArrowRoundBack color='#0066ff' size='25px' />} ></IconButton>
         <Button leftIcon={<AiFillEye/>} rounded='xl' border='1px' borderColor='#0066ff' h='30px' color='#0066ff' bg='transparent' textAlign='center' w='200px' transitionDuration='.2s'  _hover={{transform:'scale(1.04)', transitionDuration:'.2s', bg:'none'}} fontWeight='normal'>View Mode</Button> 
         <Button leftIcon={<IoSettingsSharp/>} rounded='xl' border='1px' borderColor='#0066ff' h='30px' color='#0066ff' bg='transparent' textAlign='center' w='200px' transitionDuration='.2s'  _hover={{transform:'scale(1.04)', transitionDuration:'.2s', bg:'none'}} fontWeight='normal'>Settings</Button> 
         <Button leftIcon={<AiFillFilePdf/>} rounded='xl' border='1px' borderColor='#0066ff' h='30px' color='#0066ff' bg='transparent' textAlign='center' w='200px' transitionDuration='.2s'  _hover={{transform:'scale(1.04)', transitionDuration:'.2s', bg:'none'}} fontWeight='normal'>Export PDF</Button> 
         <Button leftIcon={<FiDownload/>} rounded='xl' border='1px' borderColor='#0066ff' h='30px' color='#0066ff' bg='transparent' textAlign='center' w='200px' transitionDuration='.2s'  _hover={{transform:'scale(1.04)', transitionDuration:'.2s', bg:'none'}} fontWeight='normal'>Download Image</Button> 
     </Flex>
+    <form onSubmit={handleInvoice}>
     <Flex flexDir='column' justifyContent='space-between' p='12'>
         <Flex flexDir='column' >
             <Heading>Billing To</Heading>
-            <Input mt='10px' type='text' placeholder='Client Name' h='35px' rounded='xl' border='1px' borderColor='#0066ff'></Input>
-            <Input mt='10px' type='text' placeholder='Client Address' h='35px' rounded='xl' border='1px' borderColor='#0066ff'></Input>
-            <Input mt='10px' type='text' placeholder='Client Mobile' h='35px' rounded='xl' border='1px' borderColor='#0066ff'></Input>
-            <Input mt='10px' type='text' placeholder='Client Email' h='35px' rounded='xl' border='1px' borderColor='#0066ff'></Input>
+           
+            <Input 
+            mt='10px' 
+            type='text' 
+            placeholder='Client Name' 
+            h='35px' 
+            rounded='xl' 
+            border='1px' 
+            borderColor='#0066ff'
+            value={name}
+            onChange = {(e) => setName(e.target.value)} 
+            ></Input>
+
+<Input 
+            mt='10px' 
+            type='text' 
+            placeholder='Client Name' 
+            h='35px' 
+            rounded='xl' 
+            border='1px' 
+            borderColor='#0066ff'
+            value={car}
+            onChange = {(e) => setCar(e.target.value)} 
+            ></Input>
+
+            <Input 
+            mt='10px' 
+            type='text' 
+            placeholder='Client Address' 
+            h='35px' 
+            rounded='xl' 
+            border='1px' 
+            borderColor='#0066ff'
+            value={address}
+            onChange = {(e) => setAddress(e.target.value)} 
+            ></Input>
+
+            <Input 
+            mt='10px' 
+            type='text' 
+            placeholder='Client Mobile' 
+            h='35px' 
+            rounded='xl' 
+            border='1px' 
+            borderColor='#0066ff'
+            value={mobile}
+            onChange = {(e) => setMobile(e.target.value)} 
+            ></Input>
+
+            <Input 
+            mt='10px' 
+            type='text' 
+            placeholder='Client Email' 
+            h='35px' 
+            rounded='xl' 
+            border='1px' 
+            borderColor='#0066ff'
+            value={email}
+            onChange = {(e) => setEmail(e.target.value)} ></Input>
+          
         </Flex>
         <Flex flexDir='column' >
             <HStack mt='20px'>
@@ -60,9 +152,44 @@ const Invoices = ({setSearchinv, setInv}) => {
         
        </Flex>
        <Flex flexDir='row' alignItems='center' p='6' justifyContent='space-between' textAlign='end'>
-            <Input mt='10px' w='200px' type='text' placeholder='Product Name' h='35px' textAlign='end' rounded='xl' border='1px' borderColor='#0066ff'></Input>
-            <Input mt='10px' w='200px' type='text' placeholder='Price' h='35px' textAlign='end' rounded='xl' border='1px' borderColor='#0066ff'></Input>
-            <Input mt='10px' w='200px' type='quantity' placeholder='1' h='35px' textAlign='end' rounded='xl' border='1px' borderColor='#0066ff'></Input>
+            <Input 
+            mt='10px' 
+            w='200px' 
+            type='text' 
+            placeholder='Product Name' 
+            h='35px' 
+            textAlign='end' 
+            rounded='xl' 
+            border='1px' 
+            borderColor='#0066ff'
+            value={productName}
+            onChange = {(e) => setProductName(e.target.value)}></Input>
+
+            <Input 
+            mt='10px' 
+            w='200px' 
+            type='text' 
+            placeholder='Price' 
+            h='35px' 
+            textAlign='end' 
+            rounded='xl' 
+            border='1px' 
+            borderColor='#0066ff'
+            value={productPrice}
+            onChange={(e) => setProductPrice(e.target.value)}></Input>
+
+            <Input 
+            mt='10px' 
+            w='200px' 
+            type='quantity' 
+            placeholder='1' 
+            h='35px' 
+            textAlign='end' 
+            rounded='xl' 
+            border='1px' 
+            borderColor='#0066ff'
+            value={productQuantity}
+            onChange={(e) => setProductQuantity(e.target.value)}></Input>
                 <Text  textAlign='end' color='black' w='200px'>Rs 1200</Text>
         
        </Flex>
@@ -88,11 +215,13 @@ const Invoices = ({setSearchinv, setInv}) => {
        
        <Flex flexDir='row' alignItems='center' rounded='md' bg='white' p='8' justifyContent='space-around' >
         
-        <Button leftIcon={<AiOutlineCheck size='30px'/>}  rounded='xl' border='1px' borderColor='#0066ff' h='50px' color='#0066ff' bg='transparent' textAlign='center' w='300px' transitionDuration='.2s'  _hover={{transform:'scale(1.04)', transitionDuration:'.2s', bg:'none'}} fontWeight='normal'>Save As Draft</Button> 
-        <Button leftIcon={<MdPaid color='red' size='30px'/>} rounded='xl' border='1px' borderColor='red' h='50px' color='red' bg='transparent' textAlign='center' w='300px' transitionDuration='.2s'  _hover={{transform:'scale(1.04)', transitionDuration:'.2s', bg:'none'}} fontWeight='normal'>Save As Unpaid</Button> 
-        <Button leftIcon={<FcPaid color='white' size='30px'/>} rounded='xl' border='1px' borderColor='#0066ff' h='50px' color='white' bg='#16a34a' textAlign='center' w='300px' transitionDuration='.2s'  _hover={{transform:'scale(1.04)', transitionDuration:'.2s', bg:'#16a34a'}} fontWeight='normal'>Save As Paid</Button> 
+            <Button leftIcon={<AiOutlineCheck size='30px'/>}  rounded='xl' border='1px' borderColor='#0066ff' h='50px' color='#0066ff' bg='transparent' textAlign='center' w='300px' transitionDuration='.2s'  _hover={{transform:'scale(1.04)', transitionDuration:'.2s', bg:'none'}} fontWeight='normal'>Save As Draft</Button> 
+            <Button leftIcon={<MdPaid color='red' size='30px'/>} rounded='xl' border='1px' borderColor='red' h='50px' color='red' bg='transparent' textAlign='center' w='300px' transitionDuration='.2s'  _hover={{transform:'scale(1.04)', transitionDuration:'.2s', bg:'none'}} fontWeight='normal'>Save As Unpaid</Button> 
+            <Button leftIcon={<FcPaid color='white' size='30px'/>} rounded='xl' border='1px' borderColor='#0066ff' h='50px' color='white' bg='#16a34a' textAlign='center' w='300px' transitionDuration='.2s'  _hover={{transform:'scale(1.04)', transitionDuration:'.2s', bg:'#16a34a'}} fontWeight='normal' type='submit' >Save As Paid</Button> 
         
-    </Flex>
+        </Flex>
+       </form>
+
        
        <Flex flexDir='row' alignItems='center' rounded='md' bg='white' p='6' justifyContent='space-between' mt='20px'>
         <IoMdArrowRoundBack color='#0066ff' size='25px' />

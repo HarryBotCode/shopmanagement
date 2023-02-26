@@ -3,7 +3,7 @@ import React from 'react'
 import {FcMoneyTransfer} from 'react-icons/fc'
 import {SlOptions} from 'react-icons/sl'
 
-const Dashboard = ({setTotalinv, setTotalPersonalExpenses, setTotalBusinessExpenses}) => {
+const Dashboard = ({setTotalinv, setTotalPersonalExpenses, setTotalBusinessExpenses, setSales}) => {
   return (
     <>
     <Flex
@@ -11,7 +11,7 @@ const Dashboard = ({setTotalinv, setTotalPersonalExpenses, setTotalBusinessExpen
     flexDir='row'
     p='6'
     justifyContent='flex-start'>
-        <Heading as='h3' size='lg'>Dashboard</Heading>
+       
      
     </Flex>
      <Flex
@@ -21,7 +21,7 @@ const Dashboard = ({setTotalinv, setTotalPersonalExpenses, setTotalBusinessExpen
      flexDir='row'>
       <Card as='button' onClick={() => setTotalinv(true) } transitionDuration='.2s' _hover={{bg:'#482be7', color:'white', transform:'scale(1.05)', transitionDuration:'.2s'}}  w='400px'>
        <CardHeader>
-       <Heading size='md' fontWeight='normal'>Total Invoices</Heading>
+       <Heading size='md' fontWeight='normal'>Total Products</Heading>
        </CardHeader>
        <CardBody>
         <HStack justifyContent='space-between'>
@@ -29,7 +29,7 @@ const Dashboard = ({setTotalinv, setTotalPersonalExpenses, setTotalBusinessExpen
         <Heading>1,200</Heading></HStack>       
         </CardBody>
       </Card>
-      <Card as='button' transitionDuration='.2s' _hover={{bg:'#482be7', color:'white', transform:'scale(1.05)', transitionDuration:'.2s'}}  w='400px'>
+      <Card as='button' onClick={() => setSales(true)} transitionDuration='.2s' _hover={{bg:'#482be7', color:'white', transform:'scale(1.05)', transitionDuration:'.2s'}}  w='400px'>
        <CardHeader>
        <Heading size='md' fontWeight='normal'>Total Sale</Heading>
        </CardHeader>
@@ -66,7 +66,7 @@ const Dashboard = ({setTotalinv, setTotalPersonalExpenses, setTotalBusinessExpen
         </CardBody>
       </Card>
      </Flex>
-     <Flex
+     {/* <Flex
      p='8'
      justifyContent='space-around' 
      flexDir='column'>
@@ -132,7 +132,7 @@ const Dashboard = ({setTotalinv, setTotalPersonalExpenses, setTotalBusinessExpen
         <Heading>1,200</Heading></HStack>       
         </CardBody>
       </Card>
-     </Flex>
+     </Flex> */}
     </>
   )
 }
