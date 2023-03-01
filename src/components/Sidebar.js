@@ -12,6 +12,7 @@ const Sidebar = ({ setInv, setSales,  setExpenses, setPersonalExpenses, setBusin
       alignItems='center'
       p='5px'
       mt='5px'
+      h='100vh'
     >
       <Button
         onClick={() => setSales(false) & setInv(false)  & setExpenses(false) & setPersonalExpenses(false) & setBusinessExpenses(false) & setTotalinv(false) & setTotalPersonalExpenses(false) & setTotalBusinessExpenses(false)}

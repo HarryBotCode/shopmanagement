@@ -1,17 +1,18 @@
 import { Button, Flex, Heading, IconButton, Input, Text, HStack } from '@chakra-ui/react'
 import { React, useState } from 'react'
-import { AiFillEye, AiFillFilePdf, AiOutlineCheck, AiOutlineMinusCircle } from 'react-icons/ai'
-import { FcPaid } from 'react-icons/fc'
+import { AiFillEye, AiFillFilePdf, AiOutlineMinusCircle } from 'react-icons/ai'
+
 import { FiDownload } from 'react-icons/fi'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { IoSettingsSharp } from 'react-icons/io5'
-import { MdPaid } from 'react-icons/md'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 import { HiOutlineBadgeCheck } from 'react-icons/hi'
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
-const BusinessExpense = ({ setExpenses, setSales, setInv, setTotalBusinessExpenses, setPersonalExpenses, setBusinessExpenses, saveData }) => {
+const BusinessExpense = ({ setExpenses, setTotalBusinessExpenses, setPersonalExpenses, setBusinessExpenses, saveData }) => {
     
    
 
@@ -37,16 +38,17 @@ const BusinessExpense = ({ setExpenses, setSales, setInv, setTotalBusinessExpens
         const [description, setDescription] = useState("");
         const [price, setPrice] = useState("");
         const [quantity, setQuantity] = useState("");
-        const [buttonClicked, setButtonClicked] = useState(false);
+        const [buttonClicked, setButtonClicked] = useState("");
 
      
 
         const saveData = async (e) => {
             e.preventDefault();
-              alert("done")
+        
+           
               setButtonClicked(true);
              
-               await fetch("http://localhost:1337/api/business", {
+              const req = await fetch("http://localhost:1337/api/business", {
                    method: "POST",
                    headers: { "Content-Type": "application/json" },
                    body: await JSON.stringify({
@@ -57,7 +59,35 @@ const BusinessExpense = ({ setExpenses, setSales, setInv, setTotalBusinessExpens
                        quantity,
                    })
                })
+               const data = await req.json();
+               if (data.status == "ok"){
+                toast.success('Data Added Successfully!', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    });
+               }
+               else {
+                toast.error('ID Already Exists!', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    });
+               }
+           
+             
            }
+
 
         return (
             <> {!buttonClicked &&
@@ -139,7 +169,7 @@ const BusinessExpense = ({ setExpenses, setSales, setInv, setTotalBusinessExpens
                    
                        
                     }
-                       
+                       <ToastContainer/>
             </>
                 )
     }

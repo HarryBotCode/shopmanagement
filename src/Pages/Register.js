@@ -2,6 +2,9 @@ import { Button, Flex, Input ,Text, FormControl} from '@chakra-ui/react'
 import {React, useState} from 'react'
 import { Link } from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Register = () => {
 
@@ -30,7 +33,16 @@ const Register = () => {
       navigate("/");
     }
     else {
-      alert("UserName or Email already taken")
+      toast.error("UserName or Email already taken", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
     }
   };
 
@@ -87,7 +99,7 @@ const Register = () => {
            <Text mt='20px' color='white' _hover={{color:'#2f1893'}}><Link to="/"  >Already have an account? Sign in</Link></Text>
            </form>
        </Flex>
-   
+   <ToastContainer/>
       </Flex>
      )
   )

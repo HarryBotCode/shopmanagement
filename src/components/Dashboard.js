@@ -1,19 +1,24 @@
-import { Card, CardBody, CardHeader, Flex, Heading, HStack, Divider, Text, Highlight, MenuButton, Menu, MenuList, MenuItem, IconButton} from '@chakra-ui/react'
+import { Card, CardBody, CardHeader, Flex, Heading, HStack} from '@chakra-ui/react'
 import React from 'react'
 import {FcMoneyTransfer} from 'react-icons/fc'
-import {SlOptions} from 'react-icons/sl'
+import {GiExpense} from 'react-icons/gi'
+import {MdProductionQuantityLimits} from 'react-icons/md'
+import {BsBarChartFill} from 'react-icons/bs'
+import {MdInventory} from 'react-icons/md'
+
 
 const Dashboard = ({setTotalinv, setTotalPersonalExpenses, setTotalBusinessExpenses, setSales}) => {
   return (
     <>
     <Flex
     bg='#fafafa'
-    flexDir='row'
+    flexDir='column'
     p='6'
+    h='50vh'
     justifyContent='flex-start'>
        
      
-    </Flex>
+    
      <Flex
      p='8'
       
@@ -25,8 +30,9 @@ const Dashboard = ({setTotalinv, setTotalPersonalExpenses, setTotalBusinessExpen
        </CardHeader>
        <CardBody>
         <HStack justifyContent='space-between'>
-        <FcMoneyTransfer size='45px'/>
-        <Heading>1,200</Heading></HStack>       
+        <MdInventory size='45px'/>
+        <Heading>1,200</Heading>
+        </HStack>       
         </CardBody>
       </Card>
       <Card as='button' onClick={() => setSales(true)} transitionDuration='.2s' _hover={{bg:'#482be7', color:'white', transform:'scale(1.05)', transitionDuration:'.2s'}}  w='400px'>
@@ -35,7 +41,7 @@ const Dashboard = ({setTotalinv, setTotalPersonalExpenses, setTotalBusinessExpen
        </CardHeader>
        <CardBody>
         <HStack justifyContent='space-between'>
-        <FcMoneyTransfer size='45px'/>
+        <BsBarChartFill size='45px'/>
         <Heading>1,200</Heading></HStack>       
         </CardBody>
       </Card>
@@ -51,7 +57,7 @@ const Dashboard = ({setTotalinv, setTotalPersonalExpenses, setTotalBusinessExpen
        </CardHeader>
        <CardBody>
         <HStack justifyContent='space-between'>
-        <FcMoneyTransfer size='45px'/>
+        <GiExpense size='45px'/>
         <Heading>1,200</Heading></HStack>       
         </CardBody>
       </Card>
@@ -61,7 +67,7 @@ const Dashboard = ({setTotalinv, setTotalPersonalExpenses, setTotalBusinessExpen
        </CardHeader>
        <CardBody>
         <HStack justifyContent='space-between'>
-        <FcMoneyTransfer size='45px'/>
+        <MdProductionQuantityLimits size='45px'/>
         <Heading>1,200</Heading></HStack>       
         </CardBody>
       </Card>
@@ -133,6 +139,7 @@ const Dashboard = ({setTotalinv, setTotalPersonalExpenses, setTotalBusinessExpen
         </CardBody>
       </Card>
      </Flex> */}
+     </Flex>
     </>
   )
 }

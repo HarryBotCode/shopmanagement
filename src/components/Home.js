@@ -38,7 +38,7 @@ const Home = () => {
                   "nav footer"`}
         gridTemplateRows={'50px 1fr 30px'}
         gridTemplateColumns={'250px 1fr'}
-        h='200vh'
+        h='100vh'
         gap='1'
         color='blackAlpha.700'
         fontWeight='bold'

@@ -3,6 +3,9 @@ import {React, useState} from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Login = () => {
 
   const [name, setName] = useState("");
@@ -26,10 +29,20 @@ const Login = () => {
 
     const data = await req.json();
     if (data.status == "ok"){
+      
       navigate("/home");
     }
     else {
-      alert("username or password incorrect")
+      toast.error('Username or password incorrect!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
     }
 
   };
@@ -75,7 +88,7 @@ const Login = () => {
            <Text mt='20px' color='white' _hover={{color:'#2f1893'}}><Link to="/register"  >Doesn't have an account? Sign up</Link></Text>
            </form>
        </Flex>
-   
+       <ToastContainer/>
       </Flex>
      )
   )

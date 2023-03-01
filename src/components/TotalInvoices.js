@@ -1,9 +1,10 @@
 import { Button, Flex, Heading, IconButton, Input, InputGroup, InputLeftAddon, InputRightAddon, Menu, MenuButton, MenuItem, MenuList} from '@chakra-ui/react'
 import {React, useState, useEffect} from 'react'
-import { AiFillFilePdf, AiFillPhone} from 'react-icons/ai'
+import { AiFillFilePdf} from 'react-icons/ai'
 import { HiUserCircle } from 'react-icons/hi'
-import { SlOptions } from 'react-icons/sl'
-import { TbFileInvoice } from 'react-icons/tb'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   Table,
   Thead,
@@ -14,10 +15,44 @@ import {
   TableCaption,
   TableContainer,
 } from '@chakra-ui/react'
-import { BsSearch } from 'react-icons/bs'
+
 
 const TotalInvoices = ({setTotalinv, setInv}) => {
   const [data, setData] = useState([]);
+  const [searchName, setSearchName] = useState([]);
+
+  const deleteUser = ( id, productName) => {
+    if (window.confirm(`Are you sure you want to delete ${productName} ?`)){
+      fetch("http://localhost:1337/deleteInvoice", {
+        method:"POST",
+        crossDomain: true,
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          userid: id,
+        }),
+      }).then ((res) => res.json())
+        .then((data) => {
+          alert(data.data)
+          toast.success('Deleted Successfully!', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            });
+            
+          
+        }).then(() => {
+          window.location.reload();
+        })
+        
+  } else {
+  
+  }
+  };
 
   useEffect(() => {
     fetch ("http://localhost:1337/getInvoice", {
@@ -29,6 +64,8 @@ const TotalInvoices = ({setTotalinv, setInv}) => {
     setData(data.data);
 })    
 }, []);
+
+
 
   return (
    <>
@@ -44,14 +81,10 @@ const TotalInvoices = ({setTotalinv, setInv}) => {
             <Flex flexDir='row' p='4'>
                 <InputGroup>
                 <InputLeftAddon>{<HiUserCircle size='30px'/> }</InputLeftAddon> 
-                <Input type='text' placeholder='Name'/>
-                <InputRightAddon>{<BsSearch/>}</InputRightAddon>
+                <Input type='text' placeholder='Name' onChange={(e) => setSearchName(e.target.value)}/>
+                {/* <InputRightAddon>{<BsSearch/>}</InputRightAddon> */}
                 </InputGroup>
-                <InputGroup ml='20px'>
-                <InputLeftAddon >{<AiFillPhone size='30px'/>}</InputLeftAddon>
-                <Input type='number' placeholder='Phone Name' />
-                <InputRightAddon>{<BsSearch/>}</InputRightAddon>
-                </InputGroup>
+               
             </Flex>
             
         </Flex>
@@ -72,80 +105,54 @@ const TotalInvoices = ({setTotalinv, setInv}) => {
             <TableCaption>USER DETAILS</TableCaption>
             <Thead>
               <Tr>
+                <Th>ID</Th>
                 <Th>Name</Th>
-                <Th>Email</Th>
-                <Th >Phone no.</Th>
+                <Th >Quantity</Th>
                 {/* <Th>Address</Th> */}
-                <Th>ProductName</Th>
-                <Th>Quantity</Th>
                 <Th>Price</Th>
+                <Th>Options</Th>
+                
               </Tr>
             </Thead>
-            {data.map(id => {
+            {data.filter((data) => {
+  if (searchName == "") {
+    return data
+  }else if (data.productName.toLowerCase().includes(searchName.toLowerCase()))
+    return data
+  
+  
+}).map(id => {
         return(
           
             <Tbody>
               <Tr>
-                <Td>{id.name}</Td>
-                <Td>{id.email}</Td>
-                <Td >{id.mobile}</Td>
-                {/* <Td>{id.address}</Td> */}
+                <Td>{id.productId}</Td>
                 <Td>{id.productName}</Td>
-                <Td>{id.productQuantity}</Td>
                 <Td>{id.productPrice}</Td>
-                <Td><Menu w='100px' textAlign='start'>
-          <MenuButton
-            
-            as={IconButton}
-            aria-label='Options'
-            icon={<SlOptions />}
-            variant='ghost'
-            bg='none'
-            _hover={{bg:'none'}}
-          />
-          <MenuList>
-            <MenuItem>
-              Detail
-            </MenuItem>
-            <MenuItem>
-              Delete
-            </MenuItem>
-    
-        </MenuList>
-      </Menu></Td>
+                <Td>{id.productQuantity}</Td>
+                <Td>
+         
+           
+          
+           
+            <Button size='sm' bg='#eb1f12' color='white' _hover={{bg:'#bc1707', color:'white'}} borderRadius='3xl' onClick={() => deleteUser(id._id, id.productName)}>Delete</Button>
+          
+      </Td>
               </Tr>
              
             </Tbody>
-           )
-          })}
+        
+        )})}
+
           </Table>
         </TableContainer>
         
        
+        <Heading>Total Price: $ {data.reduce((accumulator, currentValue) => accumulator + currentValue.productPrice, 0)}</Heading>
        
-       
-        {/* <Text fontWeight='normal' w='100px' textAlign='start'> <Highlight
-          query='Paid'
-          styles={{ px: '2', py: '1', rounded: 'full', bg: '#bbf7d0' }}
-          w='100px'
-        >
-          Paid
-        </Highlight>
-        </Text> */}
-    
-       
-        
-        
-             
-       
-       {/* <Flex>
-                <IconButton icon={<AiOutlineLeft/>} border='1px'></IconButton> 
-                <Button>1</Button>
-                <IconButton icon={<AiOutlineRight/>} border='1px'></IconButton> 
-
-              </Flex>   */}
+      
        </Flex>  
-       
+       <ToastContainer/>
      
       
 </>
